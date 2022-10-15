@@ -1,0 +1,88 @@
+const tweets = [
+  {
+    id: 1,
+    avatar: '',
+    name: 'Yair',
+    at: '@yair_lazaro_m',
+    date:{
+      seconds: 32,
+      minutes: 3,
+      hours: 13,
+      day: 15,
+      month: 9,
+      year: 2022,
+    },
+    content: {
+      text: 'Hola, este es un tweet de ejemplo :D',
+      images: [],
+      videos: [],
+      files: [],
+    },
+    interactions: '/api/statuses/interactions/tweets/:id',
+  },
+  {
+    id: 2,
+    avatar: '',
+    name: 'Brais Moure Dev',
+    at: '@Moure_Dev',
+    date:{
+      seconds: 45,
+      minutes: 24,
+      hours: 9,
+      day: 15,
+      month: 9,
+      year: 2022,
+    },
+    content: {
+      text: '¿Quieres aprender a resolver estos [ RETOS DE PROGRAMACIÓN ] y mejorar tu lógica?\n\nAños bisiestos\nEl segundo Ciclo sexagenario\nNúmeros perdidos\nBatalla Pokémon\nLos Anillos de Poder\nThe Legend of Zelda\nBinario a decimal\nQuick sort\nTriángulo de Pascal\n\nAQUÍ lo tienes ⇩',
+      images: [],
+      videos: [],
+      files: [],
+    },
+    interactions: '/api/statuses/interactions/tweets/:id',
+  },
+  {
+    id: 3,
+    avatar: '',
+    name: 'M A C',
+    at: '@mac_gelazzi',
+    date:{
+      seconds: 25,
+      minutes: 14,
+      hours: 10,
+      day: 15,
+      month: 9,
+      year: 2022,
+    },
+    content: {
+      text: 'Wey, que hueva Celaya',
+      images: [],
+      videos: [],
+      files: [],
+    },
+    interactions: '/api/statuses/interactions/tweets/:id',
+  },
+  {
+    id: 4,
+    avatar: '',
+    name: 'Ghost',
+    at: '@javascriptual',
+    date:{
+      seconds: 32,
+      minutes: 56,
+      hours: 12,
+      day: 14,
+      month: 9,
+      year: 2022,
+    },
+    content: {
+      text: 'CSS flex for speed-learners ~',
+      images: [],
+      videos: [],
+      files: [],
+    },
+    interactions: '/api/statuses/interactions/tweets/:id',
+  },
+];
+
+export default tweets;
