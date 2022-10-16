@@ -1,7 +1,8 @@
+import {getDate} from "helpers/front/tweets/date";
 import TweetInteractions from "./TweetInteractions";
 
 const Tweet = ({ tweetContent }) => {
-  const date = `${tweetContent.date.hours}h`;
+  const date = getDate(tweetContent.date);
   return (
     <div className="p-4 border-b border-neutral-300 flex gap-2">
       <div className="w-16 min-h-full">
