@@ -1,19 +1,29 @@
-import { getTweetsLatestController } from "server/controller/statuses/HomeTimeline";
+import { getTweetCommentsByIdController } from "server/controller/statuses/interactions/comments";
 
-const HomeTimeline = (req, res) => {
+const getTweetCommentsById = (req, res) => {
   const url = req.url;
   const method = req.method;
   try {
-    if (req.method === "GET") {
-      const tweets = getTweetsLatestController();
+    if (method === "GET") {
+      const { id } = req.query;
+      if (!id) {
+        throw {
+          statusCode: 400,
+          statusText: {
+            en: "'id' no esta definido",
+            en: "'id' is missing",
+          },
+          input: id,
+        };
+      }
+      const comments = getTweetCommentsByIdController({ id });
       const statusCode = 200;
       res.setHeader("Content-Type", "application/json");
-      res.status(statusCode);
-      res.send({
+      res.status(statusCode).send({
         status: "OK",
         statusCode,
         method,
-        tweets,
+        comments,
         url,
       });
       return;
@@ -38,4 +48,4 @@ const HomeTimeline = (req, res) => {
   }
 };
 
-export default HomeTimeline;
+export default getTweetCommentsById;

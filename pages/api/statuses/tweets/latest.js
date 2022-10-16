@@ -1,6 +1,6 @@
 import { getTweetsLatestController } from "server/controller/statuses/HomeTimeline";
 
-const HomeTimeline = (req, res) => {
+const getTweetsLatest = (req,res) => {
   const url = req.url;
   const method = req.method;
   try {
@@ -36,6 +36,6 @@ const HomeTimeline = (req, res) => {
       url,
     });
   }
-};
+}
 
-export default HomeTimeline;
+export default getTweetsLatest;

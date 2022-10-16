@@ -9,12 +9,12 @@ import Tweet from "components/Tweet/Tweet";
 
 const Home = () => {
   const [user, setUser] = useState(null);
-  const [timeline, setTimeline] = useState(null);
+  const [timeline, setTimeline] = useState({});
   useEffect(() => {
     logginState(setUser);
     fetch("/api/statuses/HomeTimeline")
       .then((res) => res.json())
-      .then(setTimeline)
+      .then(({tweets}) => setTimeline({tweets}))
       .catch(console.log);
   }, []);
   return (
@@ -41,8 +41,8 @@ const Home = () => {
         </header>
         {/*Tweets*/}
         <section>
-          {timeline &&
-            timeline.map((tweet) => (
+          {timeline.tweets &&
+            timeline.tweets.map((tweet) => (
               <Tweet key={tweet.id} tweetContent={tweet} />
             ))}
         </section>
