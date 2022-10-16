@@ -1,4 +1,4 @@
-const tweets = [
+const Tweets = [
   {
     id: '1',
     avatar: '',
@@ -19,6 +19,7 @@ const tweets = [
       files: [],
     },
     interactions: '/api/statuses/interactions/tweets/:id',
+    comments: '/api/statuses/interactions/comments/:id',
   },
   {
     id: '2',
@@ -40,6 +41,7 @@ const tweets = [
       files: [],
     },
     interactions: '/api/statuses/interactions/tweets/:id',
+    comments: '/api/statuses/interactions/comments/:id',
   },
   {
     id: '3',
@@ -61,6 +63,7 @@ const tweets = [
       files: [],
     },
     interactions: '/api/statuses/interactions/tweets/:id',
+    comments: '/api/statuses/interactions/comments/:id',
   },
   {
     id: '4',
@@ -82,7 +85,8 @@ const tweets = [
       files: [],
     },
     interactions: '/api/statuses/interactions/tweets/:id',
+    comments: '/api/statuses/interactions/comments/:id',
   },
 ];
 
-export default tweets;
+export default Tweets;
