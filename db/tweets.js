@@ -1,6 +1,6 @@
 const tweets = [
   {
-    id: 1,
+    id: '1',
     avatar: '',
     name: 'Yair',
     at: '@yair_lazaro_m',
@@ -21,7 +21,7 @@ const tweets = [
     interactions: '/api/statuses/interactions/tweets/:id',
   },
   {
-    id: 2,
+    id: '2',
     avatar: '',
     name: 'Brais Moure Dev',
     at: '@Moure_Dev',
@@ -42,7 +42,7 @@ const tweets = [
     interactions: '/api/statuses/interactions/tweets/:id',
   },
   {
-    id: 3,
+    id: '3',
     avatar: '',
     name: 'M A C',
     at: '@mac_gelazzi',
@@ -63,7 +63,7 @@ const tweets = [
     interactions: '/api/statuses/interactions/tweets/:id',
   },
   {
-    id: 4,
+    id: '4',
     avatar: '',
     name: 'Ghost',
     at: '@javascriptual',

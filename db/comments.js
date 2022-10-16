@@ -1,9 +1,9 @@
 const Comments = [
   {
-    id: 1,
+    id:'1',
     comments: [
       {
-        id: 1,
+        id: '1',
         avatar: "",
         name: "Fulanito",
         at: "@fulanito_1",
@@ -23,7 +23,7 @@ const Comments = [
         },
       },
       {
-        id: 2,
+        id: '2',
         avatar: "",
         name: "Fulanito 2",
         at: "@fulanito_2",
@@ -45,10 +45,10 @@ const Comments = [
     ],
   },
   {
-    id: 2,
+    id: '2',
     comments: [
       {
-        id: 1,
+        id: '1',
         avatar: "",
         name: "Soy mejor que zote el todo poderoso",
         at: "@No_Soy_Zote",
@@ -68,7 +68,7 @@ const Comments = [
         },
       },
       {
-        id: 2,
+        id: '2',
         avatar: "",
         name: "Brais Moure Dev",
         at: "@Moure_Dev",
@@ -90,10 +90,10 @@ const Comments = [
     ],
   },
   {
-    id: 3,
+    id: '3',
     comments: [
       {
-        id: 1,
+        id: '1',
         avatar: "",
         name: "Fulanito 3",
         at: "@fulanito_3",
@@ -115,10 +115,10 @@ const Comments = [
     ],
   },
   {
-    id: 4,
+    id: '4',
     comments: [
       {
-        id: 1,
+        id: '1',
         avatar: "",
         name: "Ghost",
         at: "@javascriptual",
@@ -138,7 +138,7 @@ const Comments = [
         },
       },
       {
-        id: 2,
+        id: '2',
         avatar: "",
         name: "Luanna com n2",
         at: "@LiannaFanala",
@@ -158,7 +158,7 @@ const Comments = [
         },
       },
       {
-        id: 3,
+        id: '3',
         avatar: "",
         name: "Ghost",
         at: "@javascriptual",
