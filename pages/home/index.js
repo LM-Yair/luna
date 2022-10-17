@@ -16,7 +16,7 @@ const Home = () => {
         .then((res) => res.json())
         .then(({ tweets }) => setTimeline({ tweets }))
         .catch(console.log);
-  }, []);
+  }, [user]);
   return (
     <ContainerPage>
       <Head>
