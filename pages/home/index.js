@@ -11,10 +11,11 @@ const Home = () => {
   const { user } = useUser();
   const [timeline, setTimeline] = useState({});
   useEffect(() => {
-    fetch("/api/statuses/HomeTimeline")
-      .then((res) => res.json())
-      .then(({ tweets }) => setTimeline({ tweets }))
-      .catch(console.log);
+    user.status === USER_STATES.IS_LOGGED &&
+      fetch("/api/statuses/HomeTimeline")
+        .then((res) => res.json())
+        .then(({ tweets }) => setTimeline({ tweets }))
+        .catch(console.log);
   }, []);
   return (
     <ContainerPage>
