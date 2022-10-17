@@ -6,6 +6,8 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
+import { USER_STATES } from "hooks/useUser";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAq4LuYWQjEdCAnvaERkeNbEinJLKypAWw",
   authDomain: "luna-85820.firebaseapp.com",
@@ -21,13 +23,21 @@ initializeApp(firebaseConfig);
 const userLogged = (user) => {
   const { photoURL, reloadUserInfo, displayName } = user;
   const { screenName } = reloadUserInfo;
-  return { name: screenName || displayName, avatar: photoURL };
+  return {
+    status: USER_STATES.IS_LOGGED,
+    name: screenName || displayName,
+    avatar: photoURL,
+  };
 };
 
 export const logginState = (onChange) => {
   const auth = getAuth();
   return onAuthStateChanged(auth, (user) => {
-    const userIsLogged = user ? userLogged(user) : undefined;
+    const userIsLogged = user
+      ? userLogged(user)
+      : {
+          status: USER_STATES.UNKNOW,
+        };
     onChange(userIsLogged);
     return;
   });
