@@ -1,22 +1,18 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import ContainerPage from "/components/ContainerPage/ContainerPage";
 import GitHub from "/components/Icons/GitHub";
 import Logo from "components/Icons/Logo";
 
-import { loginGitHub, logginState } from "/firebase/client";
+import { loginGitHub } from "/firebase/client";
+import useUser, { USER_STATES } from "hooks/useUser";
 
 const Home = () => {
   const router = useRouter();
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const { user } = useUser();
   useEffect(() => {
-    logginState(setUser);
-    setLoading(false);
-  }, []);
-  useEffect(() => {
-    user && router.replace("/home");
+    user.status === USER_STATES.IS_LOGGED && router.replace("/home");
   }, [user]);
   const handleLogin = () => {
     loginGitHub().catch(console.log);
@@ -35,12 +31,15 @@ const Home = () => {
         <title>Luna</title>
       </Head>
       <section className="w-full h-full flex flex-col items-center justify-center ">
-        <Logo size={100} priorityimg={true}/>
+        <Logo size={100} priorityimg={true} />
         <h3 className="text-center text-4xl font-bold m-2">Luna</h3>
         <p className="m-2">Inspired by Twitter</p>
-        {loading && <span className="text-lg">Cargando...</span>}
+        {/* show loading messsage if: */}
+        {user.status === USER_STATES.NOT_LOGGED && (
+          <span className="text-lg">Cargando...</span>
+        )}
         {/* show loggin button if: */}
-        {user === undefined && !loading && (
+        {user.status === USER_STATES.UNKNOW && (
           <button
             onClick={handleLogin}
             className="flex items-center text-neutral-100 p-2 m-2 bg-neutral-900 rounded-xl"

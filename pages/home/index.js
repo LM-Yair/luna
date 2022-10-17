@@ -2,19 +2,18 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import ContainerPage from "/components/ContainerPage/ContainerPage";
 import Avatar from "components/avatar/avatar";
-import Logo from "components/Icons/Logo";
 
-import { logginState } from "/firebase/client";
 import Tweet from "components/Tweet/Tweet";
+import Navigation from "components/Navigation/Navigation";
+import useUser, { USER_STATES } from "hooks/useUser";
 
 const Home = () => {
-  const [user, setUser] = useState(null);
+  const { user } = useUser();
   const [timeline, setTimeline] = useState({});
   useEffect(() => {
-    logginState(setUser);
     fetch("/api/statuses/HomeTimeline")
       .then((res) => res.json())
-      .then(({tweets}) => setTimeline({tweets}))
+      .then(({ tweets }) => setTimeline({ tweets }))
       .catch(console.log);
   }, []);
   return (
@@ -29,10 +28,12 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
         <title>Luna</title>
       </Head>
-      <section className="w-full h-full">
+      <section className="w-full min-h-full">
         <header className="p-2 sticky top-0 left-0 flex justify-between bg-neutral-200/75 backdrop-blur-sm">
           <div className="w-16 flex items-center justify-center">
-            {user && <Avatar avatar={user.avatar} avatarSize={35} />}
+            {user.status === USER_STATES.IS_LOGGED && (
+              <Avatar avatar={user.avatar} avatarSize={35} />
+            )}
           </div>
           <div className="w-full flex items-center">
             <h2 className="text-xl font-bold ml-2">Home</h2>
@@ -47,6 +48,7 @@ const Home = () => {
             ))}
         </section>
       </section>
+      <Navigation />
     </ContainerPage>
   );
 };
