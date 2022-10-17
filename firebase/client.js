@@ -27,7 +27,7 @@ const userLogged = (user) => {
 export const logginState = (onChange) => {
   const auth = getAuth();
   return onAuthStateChanged(auth, (user) => {
-    const userIsLogged = user ? userLogged(user) : null;
+    const userIsLogged = user ? userLogged(user) : undefined;
     onChange(userIsLogged);
     return;
   });
@@ -36,7 +36,5 @@ export const logginState = (onChange) => {
 export const loginGitHub = () => {
   const loginGitHubProvider = new GithubAuthProvider();
   const auth = getAuth();
-  return signInWithPopup(auth, loginGitHubProvider)
-    .then((user) => userLogged(user.user))
-    .catch(console.log);
+  return signInWithPopup(auth, loginGitHubProvider);
 };
