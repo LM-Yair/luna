@@ -21,9 +21,10 @@ const firebaseConfig = {
 initializeApp(firebaseConfig);
 
 const userLogged = (user) => {
-  const { photoURL, reloadUserInfo, displayName } = user;
+  const { photoURL, reloadUserInfo, displayName, uid } = user;
   const { screenName } = reloadUserInfo;
   return {
+    uid,
     status: USER_STATES.IS_LOGGED,
     name: screenName || displayName,
     avatar: photoURL,
