@@ -6,15 +6,17 @@ import Avatar from "components/avatar/avatar";
 import Tweet from "components/Tweet/Tweet";
 import Navigation from "components/Navigation/Navigation";
 import useUser, { USER_STATES } from "hooks/useUser";
+import { getLatestTweets } from "/firebase/client";
 
 const Home = () => {
   const { user } = useUser();
   const [timeline, setTimeline] = useState({});
   useEffect(() => {
     user.status === USER_STATES.IS_LOGGED &&
-      fetch("/api/statuses/HomeTimeline")
-        .then((res) => res.json())
-        .then(({ tweets }) => setTimeline({ tweets }))
+      getLatestTweets()
+        .then((tweets) => {
+          setTimeline({ tweets });
+        })
         .catch(console.log);
   }, [user]);
   return (
@@ -45,7 +47,16 @@ const Home = () => {
         <section>
           {timeline.tweets &&
             timeline.tweets.map((tweet) => (
-              <Tweet key={tweet.id} tweetContent={tweet} />
+              <Tweet
+                key={tweet.id}
+                id={tweet.id}
+                uid={tweet.uid}
+                name={tweet.name}
+                avatar={tweet.avatar}
+                at={tweet.at}
+                date={tweet.date}
+                content={tweet.content}
+              />
             ))}
         </section>
       </section>
