@@ -1,10 +1,12 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+
 import ContainerPage from "/components/ContainerPage/ContainerPage";
 import Avatar from "components/avatar/avatar";
-
 import Tweet from "components/Tweet/Tweet";
 import Navigation from "components/Navigation/Navigation";
+import Tweetear from "components/Icons/Tweetear";
 import useUser, { USER_STATES } from "hooks/useUser";
 import { getLatestTweets } from "/firebase/client";
 
@@ -59,7 +61,17 @@ const Home = () => {
               />
             ))}
         </section>
+        <p className="text-lg text-center mt-6 text-neutral-500">
+          Esto es todo por el momento :(
+        </p>
       </section>
+      <Link href="/compose/tweet">
+        <a className="p-2 sticky bottom-16 right-0 flex justify-end items-center">
+          <div className="mr-2">
+            <Tweetear size={50} />
+          </div>
+        </a>
+      </Link>
       <Navigation />
     </ContainerPage>
   );
