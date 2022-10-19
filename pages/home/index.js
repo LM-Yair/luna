@@ -1,12 +1,10 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 
 import ContainerPage from "/components/ContainerPage/ContainerPage";
 import Avatar from "components/avatar/avatar";
 import Tweet from "components/Tweet/Tweet";
 import Navigation from "components/Navigation/Navigation";
-import Tweetear from "components/Icons/Tweetear";
 import useUser, { USER_STATES } from "hooks/useUser";
 import { getLatestTweets } from "/firebase/client";
 
