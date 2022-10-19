@@ -65,13 +65,6 @@ const Home = () => {
           Esto es todo por el momento :(
         </p>
       </section>
-      <Link href="/compose/tweet">
-        <a className="p-2 sticky bottom-16 right-0 flex justify-end items-center">
-          <div className="mr-2">
-            <Tweetear size={50} />
-          </div>
-        </a>
-      </Link>
       <Navigation />
     </ContainerPage>
   );
