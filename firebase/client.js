@@ -8,6 +8,7 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 import {
   getAuth,
   GithubAuthProvider,
@@ -16,6 +17,7 @@ import {
 } from "firebase/auth";
 
 import { USER_STATES } from "hooks/useUser";
+import { IMAGE_STATE } from "components/CreateTweet/ImageTweet";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq4LuYWQjEdCAnvaERkeNbEinJLKypAWw",
@@ -80,14 +82,35 @@ export const getLatestTweets = async () => {
     .catch(console.log);
 };
 
-export const createNewTweet = ({ uid, avatar, name, email, content }) => {
+export const upLoadImage = (file, tweetId) => {
+  const storage = getStorage();
+  const storageRef = ref(storage, `images/tweets/${tweetId}/${file.name}`);
+  return uploadBytes(storageRef, file.data);
+};
+
+export const createNewTweet = async ({ uid, avatar, name, email, content }) => {
   const newtweet = {
     uid,
     avatar,
     name,
     email,
     date: Timestamp.fromDate(new Date()),
-    content,
+    content: {
+      message: content.message,
+      image: {
+        status: content.image.status,
+        name: content.image.name,
+        src: "images/tweets/tweet_id/filename.ext",
+      },
+    },
   };
-  return addDoc(collection(db, "tweets"), newtweet);
+  return addDoc(collection(db, "tweets"), newtweet)
+    .then((res) => {
+      if (content.image.status === IMAGE_STATE.OK)
+        return upLoadImage(
+          { name: content.image.name, bytes: content.image.data },
+          res.id
+        );
+    })
+    .catch(console.warn);
 };

@@ -1,45 +1,56 @@
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 import Avatar from "components/avatar/avatar";
 import { createNewTweet } from "/firebase/client";
-import { useRouter } from "next/router";
+import Loader from "components/Loader/Loader";
+import ImageTweet, { IMAGE_STATE } from "./ImageTweet";
+import ButtonSend from "./ButtonToSend";
 
 const initialState = {
   message: "",
-  images: [],
-  videos: [],
-  files: [],
+  image: {
+    status: IMAGE_STATE.NOT_IMG,
+    data: "",
+    name: "",
+  },
 };
 
 const CreateTweet = ({ user }) => {
   const router = useRouter();
   const [form, setForm] = useState(initialState);
-  const [loading, setLoading] = useState(false);
-  const isButtonDisabled = form.message.trim().length < 1 || loading;
+  const [sendingTweet, setSendingTweet] = useState(false);
+
   const handleChange = (e) => {
     const { value, name } = e.target;
-    setForm({ [name]: value });
+    setForm({ ...form, [name]: value });
     return;
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
+    setSendingTweet(true);
     const newtweet = {
       uid: user.uid,
       avatar: user.avatar,
       name: user.name,
       email: user.email,
       content: {
-        text: form.message.trim(),
+        message: form.message.trim(),
+        image: {
+          status: form.image.status,
+          data: form.image.data,
+          name: form.image.name,
+        },
       },
     };
     createNewTweet(newtweet)
       .then(() => {
-        router.push("/home");
+        // router.push("/home");
         return;
       })
-      .catch(console.log)
-      .finally(() => setLoading(false));
+      .catch(console.warn)
+      .finally(() => setSendingTweet(false));
     setForm(initialState);
     return;
   };
@@ -48,7 +59,10 @@ const CreateTweet = ({ user }) => {
       <div className="">
         <Avatar avatar={user.avatar} avatarSize={50} />
       </div>
-      <form onSubmit={handleSubmit} className="w-full">
+      <form
+        className="w-full flex flex-col items-start"
+        onSubmit={handleSubmit}
+      >
         <textarea
           name="message"
           value={form.message}
@@ -56,13 +70,12 @@ const CreateTweet = ({ user }) => {
           className="text-xl h-28 w-full bg-transparent outline-none resize-none overflow-y-auto"
           placeholder="¡share something positive to the world!"
         ></textarea>
-        <div>
-          <input
-            className="text-neutral-300 py-2 px-4 bg-neutral-800 rounded-xl cursor-pointer"
-            type="submit"
-            value={"Share"}
-            disabled={isButtonDisabled}
-          />
+        <div className="my-2">
+          <ImageTweet form={form} setForm={setForm} />
+        </div>
+        <div className="flex items-center gap-2">
+          <ButtonSend form={form} handleSubmit={handleSubmit} />
+          {sendingTweet && <Loader />}
         </div>
       </form>
     </div>
