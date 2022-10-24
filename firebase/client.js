@@ -8,7 +8,12 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
 import {
   getAuth,
   GithubAuthProvider,
@@ -82,35 +87,57 @@ export const getLatestTweets = async () => {
     .catch(console.log);
 };
 
-export const upLoadImage = (file, tweetId) => {
+export const upLoadImage = (file) => {
   const storage = getStorage();
-  const storageRef = ref(storage, `images/tweets/${tweetId}/${file.name}`);
-  return uploadBytes(storageRef, file.data);
+  const metadata = {
+    contentType: file.type,
+  };
+  const storageRef = ref(storage, `images/tweets/${file.name}`);
+  return uploadBytesResumable(storageRef, file.data, metadata);
 };
 
+export const getImageUrl = async (path) => {
+  const storage = getStorage();
+  const gsReference = ref(storage, `gs://luna-85820.appspot.com/${path}`);
+  return getDownloadURL(gsReference);
+};
+
+export const getSrcToImage = (path) => {
+  const storage = getStorage();
+  const reference = ref(storage, path);
+  return getDownloadURL(reference);
+}
+
 export const createNewTweet = async ({ uid, avatar, name, email, content }) => {
-  const newtweet = {
-    uid,
-    avatar,
-    name,
-    email,
-    date: Timestamp.fromDate(new Date()),
-    content: {
-      message: content.message,
-      image: {
-        status: content.image.status,
-        name: content.image.name,
-        src: "images/tweets/tweet_id/filename.ext",
+  try {
+    const newtweet = {
+      uid,
+      avatar,
+      name,
+      email,
+      date: Timestamp.fromDate(new Date()),
+      content: {
+        message: content.message,
+        image: {
+          status: IMAGE_STATE.NOT_IMG,
+        },
       },
-    },
-  };
-  return addDoc(collection(db, "tweets"), newtweet)
-    .then((res) => {
-      if (content.image.status === IMAGE_STATE.OK)
-        return upLoadImage(
-          { name: content.image.name, bytes: content.image.data },
-          res.id
-        );
-    })
-    .catch(console.warn);
+    };
+    if (content.image.status === IMAGE_STATE.OK) {
+      const uploadTask = await upLoadImage({
+        name: content.image.name,
+        type: content.image.type,
+        data: content.image.data,
+      });
+      const path = await getImageUrl(uploadTask.metadata.fullPath);
+      newtweet.content.image = {
+        status: IMAGE_STATE.OK,
+        path,
+      };
+      return addDoc(collection(db, "tweets"), newtweet);
+    }
+    return addDoc(collection(db, "tweets"), newtweet);
+  } catch (err) {
+    throw err;
+  }
 };

@@ -14,7 +14,7 @@ export const IMAGE_STATE = {
 };
 
 const ImageTweet = ({ form, setForm }) => {
-  const [img, setImg] = useState(form.image.status);
+  const [img, setImg] = useState(IMAGE_STATE.NOT_IMG);
   const removeImage = () => {
     setImg(IMAGE_STATE.NOT_IMG);
     setForm({
@@ -36,13 +36,16 @@ const ImageTweet = ({ form, setForm }) => {
       setImg(IMAGE_STATE.IS_LOADING);
     });
     reader.addEventListener("loadend", () => {
+      const { name, type } = image;
       setImg(IMAGE_STATE.OK);
       setForm({
         ...form,
         image: {
           status: IMAGE_STATE.OK,
-          data: reader.result,
-          name: image.name,
+          data: image,
+          preview: reader.result,
+          type,
+          name,
         },
       });
     });
@@ -55,7 +58,7 @@ const ImageTweet = ({ form, setForm }) => {
       </div>
     );
   }
-  if (img === IMAGE_STATE.OK && form.image.status === IMAGE_STATE.OK) {
+  if (img === IMAGE_STATE.OK && form.image.preview) {
     return (
       <div className="w-[50px] h-[50px] relative">
         <div
@@ -66,7 +69,7 @@ const ImageTweet = ({ form, setForm }) => {
         </div>
         <Image
           className="rounded-xl"
-          src={form.image.data}
+          src={form.image.preview}
           width={50}
           height={50}
         />

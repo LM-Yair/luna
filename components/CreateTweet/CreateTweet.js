@@ -12,6 +12,7 @@ const initialState = {
   image: {
     status: IMAGE_STATE.NOT_IMG,
     data: "",
+    type: "image/[png,jpg,webp]",
     name: "",
   },
 };
@@ -46,7 +47,7 @@ const CreateTweet = ({ user }) => {
     };
     createNewTweet(newtweet)
       .then(() => {
-        // router.push("/home");
+        router.push("/home");
         return;
       })
       .catch(console.warn)

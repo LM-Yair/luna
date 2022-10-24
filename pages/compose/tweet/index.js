@@ -3,6 +3,7 @@ import ContainerPage from "/components/ContainerPage/ContainerPage";
 
 import useUser, { USER_STATES } from "hooks/useUser";
 import CreateTweet from "components/CreateTweet/CreateTweet";
+import Header from "components/Header/Header";
 
 const TweetPage = () => {
   const { user } = useUser();
@@ -19,9 +20,7 @@ const TweetPage = () => {
         <title>Luna</title>
       </Head>
       <section className="w-full min-h-full">
-        <header className="p-2 sticky top-0 left-0  bg-neutral-200/75">
-          <div className="w-16 flex items-center justify-center">{"<-"}</div>
-        </header>
+        <Header pageName="Create Tweet" />
         <section>
           {user.status === USER_STATES.IS_LOGGED && <CreateTweet user={user} />}
         </section>
