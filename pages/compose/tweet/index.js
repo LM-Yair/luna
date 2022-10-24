@@ -1,5 +1,4 @@
 import Head from "next/head";
-import ContainerPage from "/components/ContainerPage/ContainerPage";
 
 import useUser, { USER_STATES } from "hooks/useUser";
 import CreateTweet from "components/CreateTweet/CreateTweet";
@@ -8,7 +7,7 @@ import Header from "components/Header/Header";
 const TweetPage = () => {
   const { user } = useUser();
   return (
-    <ContainerPage>
+    <>
       <Head>
         <meta charSet="UTF-8" />
         <meta
@@ -25,7 +24,7 @@ const TweetPage = () => {
           {user.status === USER_STATES.IS_LOGGED && <CreateTweet user={user} />}
         </section>
       </section>
-    </ContainerPage>
+    </>
   );
 };
 

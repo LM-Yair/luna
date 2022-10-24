@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import ContainerPage from "/components/ContainerPage/ContainerPage";
+
 import GitHub from "/components/Icons/GitHub";
 import Logo from "components/Icons/Logo";
 
@@ -19,7 +19,7 @@ const Home = () => {
     return;
   };
   return (
-    <ContainerPage>
+    <>
       <Head>
         <meta charSet="UTF-8" />
         <meta
@@ -51,7 +51,7 @@ const Home = () => {
           </button>
         )}
       </section>
-    </ContainerPage>
+    </>
   );
 };
 

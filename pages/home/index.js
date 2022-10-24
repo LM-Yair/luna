@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
-import ContainerPage from "/components/ContainerPage/ContainerPage";
 import Avatar from "components/avatar/avatar";
 import Tweet from "components/Tweet/Tweet";
 import Navigation from "components/Navigation/Navigation";
@@ -20,7 +19,7 @@ const Home = () => {
         .catch(console.log);
   }, [user]);
   return (
-    <ContainerPage>
+    <>
       <Head>
         <meta charSet="UTF-8" />
         <meta
@@ -64,7 +63,7 @@ const Home = () => {
         </p>
       </section>
       <Navigation />
-    </ContainerPage>
+    </>
   );
 };
 
