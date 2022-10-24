@@ -1,5 +1,3 @@
-// import Header from "components/Header/Header";
-// import Footer from "components/Footer/Footer";
 import { containerPage } from "./containerPage.module.css";
 
 const ContainerPage = ({ children }) => {
