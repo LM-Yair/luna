@@ -5,7 +5,8 @@ import TweetInteractions from "./TweetInteractions";
 
 const Tweet = ({ uid, id, name, avatar, at, date, content }) => {
   const hasImage = content.image.status === IMAGE_STATE.OK;
-  const timeago = timeAgo(date);
+  const _date = date._seconds * 1000;
+  const timeago = timeAgo(_date);
   return (
     <div className="p-4 border-b border-neutral-300 flex gap-2">
       <div className="w-[50px] min-h-full">

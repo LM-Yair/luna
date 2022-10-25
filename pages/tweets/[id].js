@@ -25,8 +25,7 @@ const TweetPage = ({ id }) => {
       .then((res) => res.json())
       .then((data) => {
         const tweet = data.tweet;
-        const date = tweet.date._seconds * 1000;
-        setTweet({ ...tweet, date, id });
+        setTweet({ ...tweet, id });
       })
       .catch(() => {
         console.log("ERROR_TWEET_NOT_FOUND");

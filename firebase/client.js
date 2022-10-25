@@ -7,6 +7,7 @@ import {
   Timestamp,
   query,
   orderBy,
+  onSnapshot,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -70,13 +71,28 @@ export const getLatestTweets = async () => {
     .then((querySnapshot) => {
       return querySnapshot.docs.map((doc) => {
         const data = doc.data();
+        const id = doc.id;
+        return { id, ...data };
+      });
+    })
+    .catch(console.log);
+};
+
+export const listenLatestTweets = async (cb) => {
+  const tweetRef = collection(db, "tweets");
+  const q = query(tweetRef, orderBy("date", "desc"));
+  return onSnapshot(q)
+    .then(({docs}) => {
+      cb(docs);
+      return querySnapshot.docs.map((doc) => {
+        const data = doc.data();
         const date = data.date.seconds * 1000;
         const id = doc.id;
         return { id, ...data, date };
       });
     })
     .catch(console.log);
-};
+}
 
 export const upLoadImage = (file) => {
   const storage = getStorage();
