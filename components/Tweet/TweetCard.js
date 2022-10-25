@@ -6,8 +6,7 @@ import Link from "next/link";
 
 const TweetCard = ({ uid, id, name, avatar, at, date, content }) => {
   const hasImage = content.image.status === IMAGE_STATE.OK;
-  const _date = date.seconds * 1000;
-  const timeago = timeAgo(_date);
+  const timeago = timeAgo(date);
   return (
     <div className="p-4 border-b border-neutral-300 flex gap-2">
       <div className="w-[50px] min-h-full">

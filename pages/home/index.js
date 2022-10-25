@@ -6,6 +6,7 @@ import TweetCard from "components/Tweet/TweetCard";
 import Navigation from "components/Navigation/Navigation";
 import useUser, { USER_STATES } from "hooks/useUser";
 import { getLatestTweets } from "/firebase/client";
+import {filterTweetData} from "helpers/front/tweets/tweetData";
 
 const Home = () => {
   const { user } = useUser();
@@ -15,9 +16,7 @@ const Home = () => {
       getLatestTweets()
         .then((docs) => {
           const tweets = docs.map((doc) => {
-            const data = doc.data();
-            const id = doc.id;
-            return { id, ...data };
+            return filterTweetData(doc.id,doc.data());
           });
           setTimeline({ tweets });
         })
