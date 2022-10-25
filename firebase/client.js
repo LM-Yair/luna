@@ -90,18 +90,8 @@ export const getImageUrl = async (path) => {
 
 export const createNewTweet = async ({ uid, avatar, name, email, content }) => {
   try {
-    const newtweet = {
-      uid,
-      avatar,
-      name,
-      email,
-      date: Timestamp.fromDate(new Date()),
-      content: {
-        message: content.message,
-        image: {
-          status: IMAGE_STATE.NOT_IMG,
-        },
-      },
+    const image = {
+      status: IMAGE_STATE.NOT_IMG,
     };
     if (content.image.status === IMAGE_STATE.OK) {
       const uploadTask = await upLoadImage({
@@ -110,12 +100,20 @@ export const createNewTweet = async ({ uid, avatar, name, email, content }) => {
         data: content.image.data,
       });
       const path = await getImageUrl(uploadTask.metadata.fullPath);
-      newtweet.content.image = {
-        status: IMAGE_STATE.OK,
-        path,
-      };
-      return addDoc(collection(db, "tweets"), newtweet);
+      image.status = IMAGE_STATE.OK;
+      image.path = path;
     }
+    const newtweet = {
+      uid,
+      avatar,
+      name,
+      email,
+      date: Timestamp.fromDate(new Date()),
+      content: {
+        message: content.message,
+        image,
+      },
+    };
     return addDoc(collection(db, "tweets"), newtweet);
   } catch (err) {
     throw err;
