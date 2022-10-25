@@ -7,7 +7,6 @@ import {
   Timestamp,
   query,
   orderBy,
-  onSnapshot,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -24,7 +23,7 @@ import {
 
 import { USER_STATES } from "hooks/useUser";
 import { IMAGE_STATE } from "components/CreateTweet/ImageTweet";
-import {firebaseConfig} from "./config";
+import { firebaseConfig } from "./config";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -68,31 +67,11 @@ export const getLatestTweets = async () => {
   const tweetRef = collection(db, "tweets");
   const q = query(tweetRef, orderBy("date", "desc"));
   return getDocs(q)
-    .then((querySnapshot) => {
-      return querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        const id = doc.id;
-        return { id, ...data };
-      });
+    .then(({ docs }) => {
+      return docs;
     })
     .catch(console.log);
 };
-
-export const listenLatestTweets = async (cb) => {
-  const tweetRef = collection(db, "tweets");
-  const q = query(tweetRef, orderBy("date", "desc"));
-  return onSnapshot(q)
-    .then(({docs}) => {
-      cb(docs);
-      return querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        const date = data.date.seconds * 1000;
-        const id = doc.id;
-        return { id, ...data, date };
-      });
-    })
-    .catch(console.log);
-}
 
 export const upLoadImage = (file) => {
   const storage = getStorage();

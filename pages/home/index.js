@@ -13,7 +13,12 @@ const Home = () => {
   useEffect(() => {
     user.status === USER_STATES.IS_LOGGED &&
       getLatestTweets()
-        .then((tweets) => {
+        .then((docs) => {
+          const tweets = docs.map((doc) => {
+            const data = doc.data();
+            const id = doc.id;
+            return { id, ...data };
+          });
           setTimeline({ tweets });
         })
         .catch(console.log);
