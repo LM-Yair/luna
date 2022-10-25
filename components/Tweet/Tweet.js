@@ -25,7 +25,7 @@ const Tweet = ({ uid, id, name, avatar, at, date, content }) => {
           <div className="flex gap-2">
             <span className="font-bold">{name}</span>
             <span className="text-neutral-500">{at}</span>
-            <span className="text-neutral-500">{timeago}</span>
+            <time className="text-neutral-500">{timeago}</time>
           </div>
           <div>
             <span className="text-neutral-500 text-l">...</span>
