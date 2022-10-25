@@ -5,22 +5,23 @@ import Avatar from "components/avatar/avatar";
 import TweetCard from "components/Tweet/TweetCard";
 import Navigation from "components/Navigation/Navigation";
 import useUser, { USER_STATES } from "hooks/useUser";
-import { getLatestTweets } from "/firebase/client";
-import {filterTweetData} from "helpers/front/tweets/tweetData";
+import { getLatestTweets, listenLatestTweets } from "/firebase/client";
+import { filterTweetData } from "helpers/front/tweets/tweetData";
 
 const Home = () => {
   const { user } = useUser();
   const [timeline, setTimeline] = useState({});
   useEffect(() => {
-    user.status === USER_STATES.IS_LOGGED &&
-      getLatestTweets()
-        .then((docs) => {
-          const tweets = docs.map((doc) => {
-            return filterTweetData(doc.id,doc.data());
-          });
-          setTimeline({ tweets });
-        })
-        .catch(console.log);
+    let unsubscribe = false;
+    if (user.status === USER_STATES.IS_LOGGED) {
+      unsubscribe = listenLatestTweets((docs) => {
+        const tweets = docs.map((doc) => {
+          return filterTweetData(doc.id, doc.data());
+        });
+        setTimeline({ tweets });
+      });
+    }
+    return () => unsubscribe && unsubscribe();
   }, [user]);
   return (
     <>
