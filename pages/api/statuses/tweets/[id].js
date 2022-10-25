@@ -1,6 +1,6 @@
 import {getTweetByIdController} from "server/controller/statuses/tweets/tweets";
 
-const getTweetCommentsById = (req, res) => {
+const getTweetCommentsById = async (req, res) => {
   const url = req.url;
   const method = req.method;
   try {
@@ -16,7 +16,7 @@ const getTweetCommentsById = (req, res) => {
           input: id,
         };
       }
-      const tweet = getTweetByIdController({ id });
+      const tweet = await getTweetByIdController({ id });
       const statusCode = 200;
       res.setHeader("Content-Type", "application/json");
       res.status(statusCode).send({

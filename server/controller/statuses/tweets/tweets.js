@@ -1,8 +1,8 @@
 import {getTweetByIdService} from "server/services/statuses/tweets/tweets";
 
-export const getTweetByIdController = ({id}) => {
+export const getTweetByIdController = async ({id}) => {
   try{
-    const tweet = getTweetByIdService({id});
+    const tweet = await getTweetByIdService({id});
     return tweet;
   }catch(err){
     throw err;

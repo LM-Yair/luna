@@ -1,29 +1,9 @@
-import Tweets from 'db/tweets';
+import { firestore } from "/firebase/admin";
 
-export const getTweetByIdService = ({id}) => {
+export const getTweetByIdService = async ({id}) => {
   try {
-    if (!id) {
-      throw {
-        statusCode: 400,
-        statusText: {
-          en: "'id' no esta definido",
-          en: "'id' is missing",
-        },
-        input: id,
-      };
-    }
-    if (!Tweets) {
-      throw {
-        statusCode: 500,
-        statusText: {
-          es: "no se pudo acceder a la base de datos de Tweets",
-          en: "cannot be to access to Tweets db",
-        },
-      };
-    }
-    const tweet = Tweets.find(
-      (interaction) => interaction.id === id
-    );
+    const doc = await firestore.collection('tweets').doc(id).get();
+    const tweet = doc.data();
     return tweet;
   } catch (err) {
     console.log({err});
