@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 
 import Avatar from "components/avatar/avatar";
-import Tweet from "components/Tweet/Tweet";
+import TweetCard from "components/Tweet/TweetCard";
 import Navigation from "components/Navigation/Navigation";
 import useUser, { USER_STATES } from "hooks/useUser";
 import { getLatestTweets } from "/firebase/client";
@@ -46,7 +46,7 @@ const Home = () => {
         <section>
           {timeline.tweets &&
             timeline.tweets.map((tweet) => (
-              <Tweet
+              <TweetCard
                 key={tweet.id}
                 id={tweet.id}
                 uid={tweet.uid}
