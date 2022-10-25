@@ -23,16 +23,7 @@ import {
 
 import { USER_STATES } from "hooks/useUser";
 import { IMAGE_STATE } from "components/CreateTweet/ImageTweet";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAq4LuYWQjEdCAnvaERkeNbEinJLKypAWw",
-  authDomain: "luna-85820.firebaseapp.com",
-  projectId: "luna-85820",
-  storageBucket: "luna-85820.appspot.com",
-  messagingSenderId: "764355860670",
-  appId: "1:764355860670:web:00cd9f53df6d9c0e9e26ef",
-  measurementId: "G-HVBHJWSMK1",
-};
+import {firebaseConfig} from "./config";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -101,12 +92,6 @@ export const getImageUrl = async (path) => {
   const gsReference = ref(storage, `gs://luna-85820.appspot.com/${path}`);
   return getDownloadURL(gsReference);
 };
-
-export const getSrcToImage = (path) => {
-  const storage = getStorage();
-  const reference = ref(storage, path);
-  return getDownloadURL(reference);
-}
 
 export const createNewTweet = async ({ uid, avatar, name, email, content }) => {
   try {
