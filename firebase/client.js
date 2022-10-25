@@ -73,6 +73,16 @@ export const getLatestTweets = async () => {
     .catch(console.log);
 };
 
+export const listenLatestTweets = async (cb) => {
+  const tweetRef = collection(db, "tweets");
+  const q = query(tweetRef, orderBy("date", "desc"));
+  return onSnapshot(q)
+    .then(({ docs }) => {
+      cb(docs);
+    })
+    .catch(console.log);
+};
+
 export const upLoadImage = (file) => {
   const storage = getStorage();
   const metadata = {
