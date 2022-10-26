@@ -64,16 +64,6 @@ export const loginGitHub = () => {
   return signInWithPopup(auth, loginGitHubProvider);
 };
 
-export const getLatestTweets = async () => {
-  const tweetRef = collection(db, "tweets");
-  const q = query(tweetRef, orderBy("date", "desc"));
-  return getDocs(q)
-    .then(({ docs }) => {
-      return docs;
-    })
-    .catch(console.log);
-};
-
 export const listenLatestTweets = (cb) => {
   const tweetRef = collection(db, "tweets");
   const q = query(tweetRef, orderBy("date", "desc"));
