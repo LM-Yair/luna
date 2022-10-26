@@ -1,86 +1,58 @@
-import { useState } from "react";
-import Image from "next/image";
-
 import CrossIcon from "components/Icons/Cross";
 import ImageIcon from "components/Icons/Image";
 import Loader from "components/Loader/Loader";
+import { IMAGE_STATE } from "CONSTANTS/IMAGE_STATES";
 
-export const IMAGE_STATE = {
-  ERROR: -1,
-  NOT_IMG: 0,
-  OK: 1,
-  IS_LOADING: 2,
-  NOT_LOADING: 3,
-};
-
-const ImageTweet = ({ form, setForm }) => {
-  const [img, setImg] = useState(IMAGE_STATE.NOT_IMG);
-  const removeImage = () => {
-    setImg(IMAGE_STATE.NOT_IMG);
-    setForm({
-      ...form,
-      image: {
-        status: IMAGE_STATE.NOT_IMG,
-        data: "",
-      },
-    });
-  };
+const ImageTweet = ({ form, setImage, resetImage }) => {
   const handleLoadImage = (e) => {
     const reader = new FileReader();
-    const image = e.target.files[0];
-    reader.addEventListener("error", (e) => {
-      console.warn(e);
-      setImg(IMAGE_STATE.ERROR);
-    });
+    const file = e.target.files[0];
+    const allowFiles = ["image/png", "image/jpg", "image/jpeg"];
+    if (!allowFiles.includes(file.type)) return;
+
+    reader.addEventListener("error", resetImage);
     reader.addEventListener("loadstart", () => {
-      setImg(IMAGE_STATE.IS_LOADING);
-    });
-    reader.addEventListener("loadend", () => {
-      const { name, type } = image;
-      setImg(IMAGE_STATE.OK);
-      setForm({
-        ...form,
-        image: {
-          status: IMAGE_STATE.OK,
-          data: image,
-          preview: reader.result,
-          type,
-          name,
-        },
+      setImage({
+        status: IMAGE_STATE.IS_LOADING,
       });
     });
-    image && reader.readAsDataURL(image);
+    reader.addEventListener("loadend", () => {
+      const { name, type } = file;
+      setImage({
+        status: IMAGE_STATE.OK,
+        data: file,
+        preview: reader.result,
+        type,
+        name,
+      });
+    });
+    file && reader.readAsDataURL(file);
   };
-  if (img === IMAGE_STATE.IS_LOADING) {
+  if (form.image.status === IMAGE_STATE.IS_LOADING) {
     return (
-      <div className="w-[50px] h-[50px]">
+      <div className="w-[50px] h-[60px] flex items-center justify-center">
         <Loader size={50} />
       </div>
     );
   }
-  if (img === IMAGE_STATE.OK && form.image.preview) {
+  if (form.image.status === IMAGE_STATE.OK) {
     return (
-      <div className="w-[50px] h-[50px] relative">
+      <div className="w-[50px] h-[60px] rounded-xl flex items-center relative overflow-hidden">
         <div
-          onClick={removeImage}
+          onClick={resetImage}
           className="w-[20px] h-[20px] absolute z-10 top-0 right-0 rounded-full bg-neutral-100 cursor-pointer scale-90"
         >
           <CrossIcon size={18} />
         </div>
-        <Image
-          className="rounded-xl"
-          src={form.image.preview}
-          width={50}
-          height={50}
-        />
+        <img className="w-full h-auto" src={form.image.preview} />
       </div>
     );
   }
   return (
-    <div className="w-[50px] h-[50px] stroke-blue-500/50 hover:stroke-blue-500 relative">
+    <div className="w-[50px] h-[60px] stroke-blue-500/50 hover:stroke-blue-500 relative">
       <ImageIcon size={50} />
       <input
-        className="w-[50px] h-[50px] absolute z-20 left-0 top-0 opacity-0"
+        className="w-[50px] h-[60px] absolute z-20 left-0 top-0 opacity-0"
         onChange={handleLoadImage}
         type="file"
       />

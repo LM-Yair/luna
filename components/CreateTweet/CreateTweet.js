@@ -4,17 +4,21 @@ import { useRouter } from "next/router";
 import Avatar from "components/avatar/avatar";
 import { createNewTweet } from "/firebase/client";
 import Loader from "components/Loader/Loader";
-import ImageTweet, { IMAGE_STATE } from "./ImageTweet";
+import ImageTweet from "./ImageTweet";
 import ButtonSend from "./ButtonToSend";
+import { IMAGE_STATE } from "CONSTANTS/IMAGE_STATES";
+
+export const initialStateImage = {
+  status: IMAGE_STATE.NOT_IMG,
+  data: "",
+  type: "image/.[png,jpg]",
+  preview: "",
+  name: "",
+};
 
 const initialState = {
   message: "",
-  image: {
-    status: IMAGE_STATE.NOT_IMG,
-    data: "",
-    type: "image/[png,jpg,webp]",
-    name: "",
-  },
+  image: initialStateImage,
 };
 
 const CreateTweet = ({ user }) => {
@@ -23,11 +27,27 @@ const CreateTweet = ({ user }) => {
   const [sendingTweet, setSendingTweet] = useState(false);
 
   const handleChange = (e) => {
-    const { value, name } = e.target;
-    setForm({ ...form, [name]: value });
+    setForm({ ...form, message: e.target.value });
     return;
   };
-
+  const setImageForm = ({ status, data, type, preview, name }) => {
+    setForm({
+      ...form,
+      image: {
+        data: data || form.image.data,
+        type: type || form.image.type,
+        name: name || form.image.name,
+        status: status || form.image.status,
+        preview: preview || form.image.preview,
+      },
+    });
+  };
+  const resetImageForm = () => {
+    setForm({
+      ...form,
+      image: initialStateImage,
+    });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     setSendingTweet(true);
@@ -72,7 +92,11 @@ const CreateTweet = ({ user }) => {
           placeholder="¡share something positive to the world!"
         ></textarea>
         <div className="my-2">
-          <ImageTweet form={form} setForm={setForm} />
+          <ImageTweet
+            form={form}
+            setImage={setImageForm}
+            resetImage={resetImageForm}
+          />
         </div>
         <div className="flex items-center gap-2">
           <ButtonSend form={form} handleSubmit={handleSubmit} />
