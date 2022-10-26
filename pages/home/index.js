@@ -5,7 +5,7 @@ import Avatar from "components/avatar/avatar";
 import TweetCard from "components/Tweet/TweetCard";
 import Navigation from "components/Navigation/Navigation";
 import useUser, { USER_STATES } from "hooks/useUser";
-import { getLatestTweets, listenLatestTweets } from "/firebase/client";
+import { listenLatestTweets } from "/firebase/client";
 import { filterTweetData } from "helpers/front/tweets/tweetData";
 
 const Home = () => {
