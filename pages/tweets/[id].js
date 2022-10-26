@@ -1,6 +1,6 @@
 import Header from "components/Header/Header";
 import Tweet from "components/Tweet/Tweet";
-import {filterTweetData} from "helpers/front/tweets/tweetData";
+import { filterTweetData } from "helpers/front/tweets/tweetData";
 import useUser from "hooks/useUser";
 import { useEffect, useState } from "react";
 
@@ -28,7 +28,7 @@ const TweetPage = ({ id }) => {
         setTweet(filterTweetData(id, data.tweet));
       })
       .catch((e) => {
-        console.log("ERROR_TWEET_NOT_FOUND",e);
+        console.log("ERROR_TWEET_NOT_FOUND", e);
         setTweet(TWEET_STATE.ERROR);
       });
   }, []);
