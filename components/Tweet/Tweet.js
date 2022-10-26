@@ -1,5 +1,5 @@
 import Avatar from "components/avatar/avatar";
-import { IMAGE_STATE } from "components/CreateTweet/ImageTweet";
+import { IMAGE_STATE } from "CONSTANTS/IMAGE_STATES";
 import { timeAgo } from "helpers/front/tweets/date";
 import TweetInteractions from "./TweetInteractions";
 

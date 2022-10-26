@@ -23,7 +23,7 @@ import {
 } from "firebase/auth";
 
 import { USER_STATES } from "hooks/useUser";
-import { IMAGE_STATE } from "components/CreateTweet/ImageTweet";
+import { IMAGE_STATE } from "CONSTANTS/IMAGE_STATES";
 import { firebaseConfig } from "./config";
 
 // Initialize Firebase

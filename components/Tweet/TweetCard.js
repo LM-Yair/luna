@@ -1,5 +1,5 @@
 import Avatar from "components/avatar/avatar";
-import { IMAGE_STATE } from "components/CreateTweet/ImageTweet";
+import { IMAGE_STATE } from "CONSTANTS/IMAGE_STATES";
 import { timeAgo } from "helpers/front/tweets/date";
 import TweetInteractions from "./TweetInteractions";
 import Link from "next/link";
@@ -19,7 +19,7 @@ const TweetCard = ({ uid, id, name, avatar, at, date, content }) => {
             <span className="font-bold">{name}</span>
             <span className="text-neutral-500">{at}</span>
             <Link href={`/tweets/${id}`}>
-              <a className='cursor-pointer decoration-neutral-500 underline-offset-1 hover:underline'>
+              <a className="cursor-pointer decoration-neutral-500 underline-offset-1 hover:underline">
                 <time className="text-neutral-500">{timeago}</time>
               </a>
             </Link>
