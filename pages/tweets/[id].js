@@ -1,13 +1,10 @@
 import Header from "components/Header/Header";
+import Loader from "components/Loader/Loader";
 import Tweet from "components/Tweet/Tweet";
+import { TWEET_STATE } from "CONSTANTS/TWEET_STATE";
 import { filterTweetData } from "helpers/front/tweets/tweetData";
 import useUser from "hooks/useUser";
 import { useEffect, useState } from "react";
-
-const TWEET_STATE = {
-  ERROR: undefined,
-  NULL: null,
-};
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -20,32 +17,47 @@ export async function getServerSideProps(context) {
 
 const TweetPage = ({ id }) => {
   useUser();
-  const [tweet, setTweet] = useState(TWEET_STATE.NULL);
+  const [tweetState, setTweetState] = useState(TWEET_STATE.NULL);
+  const [tweetContent, setTweetContent] = useState(TWEET_STATE.NULL);
   useEffect(() => {
+    setTweetState(TWEET_STATE.LOADING);
     fetch(`/api/statuses/tweets/${id}`)
       .then((res) => res.json())
       .then((data) => {
-        setTweet(filterTweetData(id, data.tweet));
+        setTweetState(TWEET_STATE.OK);
+        setTweetContent(filterTweetData(id, data.tweet));
       })
       .catch((e) => {
         console.log("ERROR_TWEET_NOT_FOUND", e);
-        setTweet(TWEET_STATE.ERROR);
+        setTweetContent(TWEET_STATE.NULL);
+        setTweetState(TWEET_STATE.ERROR);
       });
   }, []);
 
-  if (tweet === TWEET_STATE.NULL) {
+  if (tweetState === TWEET_STATE.NULL) {
     return (
       <section>
         <Header pageName="Tweet" />
-        Cargando...
       </section>
     );
   }
-  if (tweet === TWEET_STATE.ERROR) {
+  if (tweetState === TWEET_STATE.LOADING) {
     return (
       <section>
         <Header pageName="Tweet" />
-        Tweet is not found
+        <div className="h-24 flex justify-center items-center">
+          <Loader size={35} />
+        </div>
+      </section>
+    );
+  }
+  if (tweetState === TWEET_STATE.ERROR) {
+    return (
+      <section>
+        <Header pageName="Tweet" />
+        <div className="h-24 flex justify-center items-center">
+          Tweet not found {":("}
+        </div>
       </section>
     );
   }
@@ -53,12 +65,12 @@ const TweetPage = ({ id }) => {
     <section>
       <Header pageName="Tweet" />
       <Tweet
-        uid={tweet.uid}
-        id={tweet.id}
-        name={tweet.name}
-        avatar={tweet.avatar}
-        date={tweet.date}
-        content={tweet.content}
+        uid={tweetContent.uid}
+        id={tweetContent.id}
+        name={tweetContent.name}
+        avatar={tweetContent.avatar}
+        date={tweetContent.date}
+        content={tweetContent.content}
       />
     </section>
   );
