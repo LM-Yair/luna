@@ -1,8 +1,9 @@
 import Head from "next/head";
 
-import useUser, { USER_STATES } from "hooks/useUser";
+import useUser from "hooks/useUser";
 import CreateTweet from "components/CreateTweet/CreateTweet";
 import Header from "components/Header/Header";
+import { USER_STATES } from "CONSTANTS/USER_STATES";
 
 const TweetPage = () => {
   const { user } = useUser();

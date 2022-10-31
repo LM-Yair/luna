@@ -2,11 +2,11 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
-import GitHub from "/components/Icons/GitHub";
 import Logo from "components/Icons/Logo";
-
-import { loginGitHub } from "/firebase/client";
-import useUser, { USER_STATES } from "hooks/useUser";
+import useUser from "hooks/useUser";
+import { USER_STATES } from "CONSTANTS/USER_STATES";
+import { loginGitHub } from "Firebase/login/login";
+import LoginWithGitHub from "components/Buttons/LoginWithGitHub";
 
 const Home = () => {
   const router = useRouter();
@@ -14,7 +14,7 @@ const Home = () => {
   useEffect(() => {
     user.status === USER_STATES.IS_LOGGED && router.replace("/home");
   }, [user]);
-  const handleLogin = () => {
+  const handleLoginGitHub = () => {
     loginGitHub().catch(console.log);
     return;
   };
@@ -34,22 +34,13 @@ const Home = () => {
         <Logo size={100} priorityimg={true} />
         <h3 className="text-center text-4xl font-bold m-2">Luna</h3>
         <p className="m-2">Inspired by Twitter</p>
-        {/* show loading messsage if: */}
-        {user.status === USER_STATES.NOT_LOGGED && (
-          <span className="text-lg">Cargando...</span>
+        {user.status === USER_STATES.VERIFYING && (
+          <span className="text-lg">Verifying login...</span>
         )}
-        {/* show loggin button if: */}
-        {user.status === USER_STATES.UNKNOW && (
-          <button
-            onClick={handleLogin}
-            className="flex items-center text-neutral-100 p-2 m-2 bg-neutral-900 rounded-xl"
-          >
-            <div className="mr-2">
-              <GitHub />
-            </div>
-            Login with GitHub
-          </button>
-        )}
+        {user.status === USER_STATES.UNKNOW ||
+          (user.status === USER_STATES.NOT_LOGGED && (
+            <LoginWithGitHub handleClick={handleLoginGitHub} />
+          ))}
       </section>
     </>
   );

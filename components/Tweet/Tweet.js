@@ -1,6 +1,7 @@
 import Avatar from "components/avatar/avatar";
 import { IMAGE_STATE } from "CONSTANTS/IMAGE_STATES";
 import { timeAgo } from "helpers/front/tweets/date";
+import Link from "next/link";
 import TweetInteractions from "./TweetInteractions";
 
 const Tweet = ({ uid, id, name, avatar, at, date, content }) => {
@@ -24,16 +25,20 @@ const Tweet = ({ uid, id, name, avatar, at, date, content }) => {
           </div>
         </div>
         {/*Tweet content*/}
-        <div className="whitespace-pre-wrap">{content.message}</div>
-        <div className="w-full max-h-96 overflow-hidden bg-neutral-400/50">
-          {hasImage && (
-            <img
-              className="w-full h-auto"
-              src={content.image.path}
-              alt={`image upload by ${name}`}
-            />
-          )}
-        </div>
+        <Link href={`/tweets/${id}`}>
+          <a>
+            <div className="whitespace-pre-wrap">{content.message}</div>
+            <div className="w-full max-h-96 overflow-hidden bg-neutral-400/50">
+              {hasImage && (
+                <img
+                  className="w-full h-auto"
+                  src={content.image.path}
+                  alt={`image upload by ${name}`}
+                />
+              )}
+            </div>
+          </a>
+        </Link>
         {/*Tweet interactions*/}
         <TweetInteractions id={id} />
       </div>

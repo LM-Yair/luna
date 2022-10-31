@@ -1,10 +1,11 @@
+import { useEffect, useState } from "react";
+
 import Header from "components/Header/Header";
 import Loader from "components/Loader/Loader";
 import Tweet from "components/Tweet/Tweet";
 import { TWEET_STATE } from "CONSTANTS/TWEET_STATE";
 import { filterTweetData } from "helpers/front/tweets/tweetData";
 import useUser from "hooks/useUser";
-import { useEffect, useState } from "react";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;

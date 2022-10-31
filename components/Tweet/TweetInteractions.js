@@ -25,12 +25,10 @@ const TweetInteractions = () => {
   // }
   return (
     <div className="py-2 flex justify-between">
-      <div className="py-2 flex justify-between">
-        <Comment size={20} />
-        <Like size={20} />
-        <ReTweet size={20} />
-        <Send size={20} />
-      </div>
+      <Comment size={20} />
+      <Like size={20} />
+      <ReTweet size={20} />
+      <Send size={20} />
     </div>
   );
 };

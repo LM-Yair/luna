@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import Avatar from "components/avatar/avatar";
-import { createNewTweet } from "/firebase/client";
-import Loader from "components/Loader/Loader";
 import ImageTweet from "./ImageTweet";
 import ButtonSend from "./ButtonToSend";
+import Avatar from "components/avatar/avatar";
+import Loader from "components/Loader/Loader";
 import { IMAGE_STATE } from "CONSTANTS/IMAGE_STATES";
+import { createNewTweet } from "Firebase/database/actions";
 
 export const initialStateImage = {
   status: IMAGE_STATE.NOT_IMG,

@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import Avatar from "components/avatar/avatar";
 import TweetCard from "components/Tweet/TweetCard";
 import Navigation from "components/Navigation/Navigation";
-import useUser, { USER_STATES } from "hooks/useUser";
-import { listenLatestTweets } from "/firebase/client";
+import useUser from "hooks/useUser";
+import { listenLatestTweets } from "Firebase/database/actions";
 import { filterTweetData } from "helpers/front/tweets/tweetData";
+import { USER_STATES } from "CONSTANTS/USER_STATES";
 
 const Home = () => {
   const { user } = useUser();

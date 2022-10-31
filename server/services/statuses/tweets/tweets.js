@@ -1,4 +1,4 @@
-import { firestore } from "/firebase/admin";
+import { firestore } from "/Firebase/admin";
 
 export const getTweetByIdService = async ({id}) => {
   try {

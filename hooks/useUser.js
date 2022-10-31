@@ -1,26 +1,25 @@
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { logginState } from "/firebase/client";
-
-export const USER_STATES = {
-  IS_LOGGED: true,
-  NOT_LOGGED: null,
-  UNKNOW: undefined,
-};
+import { USER_STATES } from "CONSTANTS/USER_STATES";
+import { logginState } from "Firebase/login/loginState";
 
 export default function useUser() {
   const router = useRouter();
   const [user, setUser] = useState({
-    status: USER_STATES.NOT_LOGGED,
+    status: USER_STATES.VERIFYING,
   });
   useEffect(() => {
     logginState(setUser);
   }, []);
 
   useEffect(() => {
-    user.status === USER_STATES.UNKNOW && router.push('/');
-  },[user]);
+    if (
+      user.status === USER_STATES.UNKNOW ||
+      user.status === USER_STATES.NOT_LOGGED
+    )
+      router.push("/");
+  }, [user]);
 
   return { user };
 }
