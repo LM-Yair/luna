@@ -39,3 +39,6 @@ next-env.d.ts
 
 # log files
 *.log
+
+# except production.log
+!production.log
