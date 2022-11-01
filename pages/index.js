@@ -5,8 +5,9 @@ import { useEffect } from "react";
 import Logo from "components/Icons/Logo";
 import useUser from "hooks/useUser";
 import { USER_STATES } from "CONSTANTS/USER_STATES";
-import { loginGitHub } from "Firebase/login/login";
+import { loginGitHub, loginGoogle } from "Firebase/login/login";
 import LoginWithGitHub from "components/Buttons/LoginWithGitHub";
+import LoginWithGoogle from "components/Buttons/LoginWithGoogle";
 
 const Home = () => {
   const router = useRouter();
@@ -14,9 +15,14 @@ const Home = () => {
   useEffect(() => {
     user.status === USER_STATES.IS_LOGGED && router.replace("/home");
   }, [user]);
-  const handleLoginGitHub = () => {
-    loginGitHub().catch(console.log);
-    return;
+
+  const handleLogin = () => {
+    const github = () => loginGitHub().catch(console.log);
+    const google = () => loginGoogle().catch(console.log);
+    return {
+      github,
+      google,
+    };
   };
   return (
     <>
@@ -39,7 +45,10 @@ const Home = () => {
         )}
         {user.status === USER_STATES.UNKNOW ||
           (user.status === USER_STATES.NOT_LOGGED && (
-            <LoginWithGitHub handleClick={handleLoginGitHub} />
+            <div>
+              <LoginWithGitHub handleClick={handleLogin().github} />
+              <LoginWithGoogle handleClick={handleLogin().google} />
+            </div>
           ))}
       </section>
     </>
