@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Logo from "components/Icons/Logo";
 import useUser from "hooks/useUser";
 import { USER_STATES } from "CONSTANTS/USER_STATES";
-import { loginGitHub, loginGoogle } from "Firebase/login/login";
+import { loginGitHub, loginGoogle } from "Firebase/auth/login";
 import LoginWithGitHub from "components/Buttons/LoginWithGitHub";
 import LoginWithGoogle from "components/Buttons/LoginWithGoogle";
 

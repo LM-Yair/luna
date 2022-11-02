@@ -1,4 +1,4 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { USER_STATES } from "CONSTANTS/USER_STATES";
 import { app } from "Firebase/client";
 
@@ -22,4 +22,9 @@ export const logginState = (onChange) => {
     onChange({ status: USER_STATES.IS_LOGGED, ...userIsLogged });
     return;
   });
+};
+
+export const logOut = () => {
+  const auth = getAuth(app);
+  return signOut(auth);
 };

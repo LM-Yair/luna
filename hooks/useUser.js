@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 import { USER_STATES } from "CONSTANTS/USER_STATES";
-import { logginState } from "Firebase/login/loginState";
+import { logginState } from "Firebase/auth/loginState";
 
 export default function useUser() {
   const router = useRouter();
