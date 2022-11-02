@@ -17,3 +17,9 @@ export const filterTweetData = (id, data = {}) => {
     },
   };
 };
+
+export const shortName = (name, maxChar = 20) => {
+  if (typeof name !== "string") return false;
+  if (name.length > maxChar) return `${name.slice(0, maxChar - 3)}...`;
+  return name;
+};

@@ -3,12 +3,13 @@ import { IMAGE_STATE } from "CONSTANTS/IMAGE_STATES";
 import { timeAgo } from "helpers/front/tweets/date";
 import TweetInteractions from "./TweetInteractions";
 import Link from "next/link";
+import { shortName } from "helpers/front/tweets/tweetData";
 
 const TweetCard = ({ uid, id, name, avatar, at, date, content }) => {
   const hasImage = content.image.status === IMAGE_STATE.OK;
   const timeago = timeAgo(date);
   return (
-    <div className="p-4 border-b border-neutral-300 flex gap-2">
+    <article className="p-4 border-b border-neutral-300 flex gap-2">
       <div className="w-[50px] min-h-full">
         <Avatar avatar={avatar} avatarSize={50} />
       </div>
@@ -16,7 +17,7 @@ const TweetCard = ({ uid, id, name, avatar, at, date, content }) => {
         {/*Tweet head*/}
         <div className="flex justify-between">
           <div className="flex gap-2">
-            <span className="font-bold">{name}</span>
+            <span className="font-bold">{shortName(name, 20)}</span>
             <span className="text-neutral-500">{at}</span>
             <Link href={`/tweets/${id}`}>
               <a className="cursor-pointer decoration-neutral-500 underline-offset-1 hover:underline">
@@ -46,7 +47,7 @@ const TweetCard = ({ uid, id, name, avatar, at, date, content }) => {
         {/*Tweet interactions*/}
         <TweetInteractions id={id} />
       </div>
-    </div>
+    </article>
   );
 };
 

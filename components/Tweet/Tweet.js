@@ -1,6 +1,7 @@
 import Avatar from "components/avatar/avatar";
 import { IMAGE_STATE } from "CONSTANTS/IMAGE_STATES";
 import { timeAgo } from "helpers/front/tweets/date";
+import { shortName } from "helpers/front/tweets/tweetData";
 import Link from "next/link";
 import TweetInteractions from "./TweetInteractions";
 
@@ -8,7 +9,7 @@ const Tweet = ({ uid, id, name, avatar, at, date, content }) => {
   const hasImage = content.image.status === IMAGE_STATE.OK;
   const timeago = timeAgo(date);
   return (
-    <div className="p-4 border-b border-neutral-300 flex gap-2">
+    <article className="p-4 border-b border-neutral-300 flex gap-2">
       <div className="w-[50px] min-h-full">
         <Avatar avatar={avatar} avatarSize={50} />
       </div>
@@ -16,7 +17,7 @@ const Tweet = ({ uid, id, name, avatar, at, date, content }) => {
         {/*Tweet head*/}
         <div className="flex justify-between">
           <div className="flex gap-2">
-            <span className="font-bold">{name}</span>
+            <span className="font-bold">{shortName(name, 20)}</span>
             <span className="text-neutral-500">{at}</span>
             <time className="text-neutral-500">{timeago}</time>
           </div>
@@ -42,7 +43,7 @@ const Tweet = ({ uid, id, name, avatar, at, date, content }) => {
         {/*Tweet interactions*/}
         <TweetInteractions id={id} />
       </div>
-    </div>
+    </article>
   );
 };
 
