@@ -6,6 +6,7 @@ import Tweet from "components/Tweet/Tweet";
 import { TWEET_STATE } from "CONSTANTS/TWEET_STATE";
 import { filterTweetData } from "helpers/front/tweets/tweetData";
 import useUser from "hooks/useUser";
+import { getTweet } from "Firebase/database/actions";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -22,11 +23,11 @@ const TweetPage = ({ id }) => {
   const [tweetContent, setTweetContent] = useState(TWEET_STATE.NULL);
   useEffect(() => {
     setTweetState(TWEET_STATE.LOADING);
-    fetch(`/api/statuses/tweets/${id}`)
-      .then((res) => res.json())
+    getTweet(id)
+      .then((docSnap) => docSnap.data())
       .then((data) => {
         setTweetState(TWEET_STATE.OK);
-        setTweetContent(filterTweetData(id, data.tweet));
+        setTweetContent(filterTweetData(id, data));
       })
       .catch((e) => {
         console.log("ERROR_TWEET_NOT_FOUND", e);

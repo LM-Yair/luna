@@ -1,9 +1,11 @@
 import {
-  collection,
-  addDoc,
-  Timestamp,
+  doc,
   query,
+  addDoc,
+  getDoc,
   orderBy,
+  Timestamp,
+  collection,
   onSnapshot,
 } from "firebase/firestore";
 
@@ -16,6 +18,11 @@ export const listenLatestTweets = (cb) => {
   const q = query(tweetRef, orderBy("date", "desc"));
   const unsub = onSnapshot(q, ({ docs }) => cb(docs));
   return unsub;
+};
+
+export const getTweet = (id) => {
+  const tweetRef = doc(db, "tweets", id);
+  return getDoc(tweetRef);
 };
 
 export const createNewTweet = async ({ uid, avatar, name, email, content }) => {
