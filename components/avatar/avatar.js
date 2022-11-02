@@ -1,16 +1,11 @@
+import AvatarImage from "./avatarImage";
+import AvatarName from "./avatarName";
+
 const Avatar = ({ avatar, avatarSize = 25, name }) => {
   return (
-    <div className="flex items-center justify-center gap-2">
-      {avatar && (
-        <img
-          className="rounded-full"
-          src={avatar}
-          width={avatarSize}
-          height={avatarSize}
-          alt="User avatar"
-        />
-      )}
-      {name && <span className="text-xl">{name}</span>}
+    <div className="flex items-center justify-center flex-wrap gap-2">
+      {avatar && <AvatarImage avatar={avatar} size={avatarSize} alt={name} />}
+      {name && <AvatarName name={name} />}
     </div>
   );
 };
