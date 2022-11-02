@@ -40,7 +40,7 @@ const ImageTweet = ({ form, setImage, resetImage }) => {
       <div className="w-[50px] h-[60px] rounded-xl flex items-center relative overflow-hidden">
         <div
           onClick={resetImage}
-          className="w-[20px] h-[20px] absolute z-10 top-0 right-0 rounded-full bg-neutral-100 cursor-pointer scale-90"
+          className="w-[20px] h-[20px] flex items-center justify-center absolute z-10 top-0 right-0 rounded-full bg-neutral-100 cursor-pointer scale-90"
         >
           <CrossIcon size={18} />
         </div>
