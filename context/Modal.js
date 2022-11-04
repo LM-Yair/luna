@@ -4,17 +4,22 @@ const ModalContext = createContext();
 
 const ModalProvider = ({ children }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const handlerModal = () => {
-    modalIsOpen ? setModalIsOpen(false) : setModalIsOpen(true);
+
+  const openModal = () => {
+    setModalIsOpen(true);
   };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
   const value = {
     modalIsOpen,
-    handlerModal,
+    openModal,
+    closeModal,
   };
   return (
-    <ModalContext.Provider value={value}>
-      {children}
-    </ModalContext.Provider>
+    <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
   );
 };
 

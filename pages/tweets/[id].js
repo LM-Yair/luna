@@ -7,6 +7,9 @@ import { TWEET_STATE } from "CONSTANTS/TWEET_STATE";
 import { filterTweetData } from "helpers/front/tweets/tweetData";
 import useUser from "hooks/useUser";
 import { getTweet } from "Firebase/database/actions";
+import { FileViewerProvider } from "context/FileViewer";
+import { ModalProvider } from "context/Modal";
+import ImageViewer from "components/Modal/ImageViewer";
 
 export async function getServerSideProps(context) {
   const { id } = context.query;
@@ -66,14 +69,19 @@ const TweetPage = ({ id }) => {
   return (
     <section>
       <Header pageName="Tweet" />
-      <Tweet
-        uid={tweetContent.uid}
-        id={tweetContent.id}
-        name={tweetContent.name}
-        avatar={tweetContent.avatar}
-        date={tweetContent.date}
-        content={tweetContent.content}
-      />
+      <ModalProvider>
+        <FileViewerProvider>
+          <ImageViewer />
+          <Tweet
+            uid={tweetContent.uid}
+            id={tweetContent.id}
+            name={tweetContent.name}
+            avatar={tweetContent.avatar}
+            date={tweetContent.date}
+            content={tweetContent.content}
+          />
+        </FileViewerProvider>
+      </ModalProvider>
     </section>
   );
 };
