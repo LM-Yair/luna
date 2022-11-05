@@ -9,7 +9,7 @@ const Modal = ({ children }) => {
     : "invisible hidden";
   return (
     <div
-      className={`h-screen w-full flex items-center justify-center overflow-hidden bg-neutral-800/25 ${viewModal}`}
+      className={`h-screen w-full flex items-center justify-center overflow-hidden bg-neutral-800/25 z-40 ${viewModal}`}
     >
       <div className="h-full w-full max-w-md relative flex flex-col justify-between overflow-x-hidden bg-neutral-200 md:max-w-[25rem] md:shadow-xl md:rounded-xl md:max-h-[40rem]">
         <div className="sticky top-0 left-0 flex justify-end bg-neutral-200/75 backdrop-blur-sm">
