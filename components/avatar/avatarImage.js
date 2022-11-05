@@ -1,7 +1,9 @@
+import Image from "next/image";
+
 const AvatarImage = ({ avatar, size = 25, alt }) => {
   return (
     <>
-      <img
+      <Image
         className="rounded-full"
         src={avatar}
         width={size}
